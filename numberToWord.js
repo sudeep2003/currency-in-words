@@ -1,7 +1,7 @@
 function numberToWords(number) {
     var units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    var teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-    var tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+    var teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    var tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
 
     function getHundredsChunk(n) {
         var str = '';
@@ -12,7 +12,7 @@ function numberToWords(number) {
             str += units[hundred] + ' hundred ';
         }
 
-        if (rest > 10 && rest < 20) {
+        if (rest >= 10 && rest < 20) {
             str += teens[rest - 10] + ' ';
         } else {
             var ten = Math.floor(rest / 10);
@@ -56,9 +56,11 @@ function numberToWords(number) {
         return words.trim();
     }
 
-    function convertDecimal(number) {
+    function convertDecimal(decimalPart) {
         var words = '';
-        var paise = Math.round(number * 100) % 100;  // Converting decimal part to paise
+        // Convert decimalPart directly
+        console.log(decimalPart);
+        var paise = decimalPart; // No rounding needed if already accurate
 
         if (paise > 0) {
             words += getHundredsChunk(paise) + ' paise';
@@ -69,11 +71,12 @@ function numberToWords(number) {
 
     // Ensure the number is rounded to handle floating point precision issues
     number = Math.round(number * 100) / 100;
-
+    console.log(number);
     // Split the number into whole and decimal parts
     var [wholeNumber, decimalPart] = number.toString().split('.').map(Number);
+    console.log(wholeNumber, decimalPart);
     var wholeWords = convertWholeNumber(wholeNumber);
-    var decimalWords = decimalPart ? convertDecimal(decimalPart) : '';
+    var decimalWords = decimalPart !== undefined ? convertDecimal(decimalPart) : '';
 
     var result = '';
     if (wholeWords) {
@@ -85,9 +88,9 @@ function numberToWords(number) {
         result = 'Zero rupees';
     }
 
-    return result.charAt(0).toUpperCase() + result.slice(1);
+    return (result.charAt(0).toUpperCase() + result.slice(1) + " only");
 }
 
 // Test the function
-var number = 16534891.254;
+var number = 0.25;
 console.log(numberToWords(number));  // Expected output: "One crore sixty five lakh thirty four thousand eight hundred ninety one rupees and twenty five paise"
