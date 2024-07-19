@@ -91,5 +91,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Thanks to contributors and maintainers of open-source JavaScript libraries.
 
 ---
-
-Feel free to adjust the content as necessary to better fit your project's specifics!
