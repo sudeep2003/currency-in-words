@@ -96,5 +96,5 @@ function numberToWords(number) {
 }
 
 // Test the function
-var number = 0.25;
-console.log(numberToWords(number));  // Expected output: "Twenty five paise only"
+// var number = 0.25;
+// console.log(numberToWords(number));  // Expected output: "Twenty five paise only"
