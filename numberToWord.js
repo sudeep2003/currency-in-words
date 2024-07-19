@@ -31,7 +31,7 @@ function numberToWords(number) {
     }
 
     function convertWholeNumber(number) {
-        if (number === 0) return "Zero"; // Handle zero case explicitly
+        if (number === 0) return ""; // Return an empty string for zero whole number
 
         var words = '';
         var crore = Math.floor(number / 10000000);
@@ -63,7 +63,9 @@ function numberToWords(number) {
         var paise = decimalPart; // Decimal part is in paise (two decimal places)
 
         if (paise > 0) {
-            words += getHundredsChunk(paise) + ' paise';
+            var paiseWords = getHundredsChunk(paise);
+            // Convert "paise" to "paisa" if it's exactly one
+            words += paiseWords + (paise === 1 ? ' paisa' : ' paise');
         }
 
         return words.trim();
@@ -82,9 +84,12 @@ function numberToWords(number) {
         result += wholeWords + ' rupees';
     }
     if (decimalWords) {
-        result += ' and ' + decimalWords;
+        if (result) {
+            result += ' and ';
+        }
+        result += decimalWords;
     } else if (!wholeWords && !decimalWords) {
-        result = 'Zero rupees';
+        result = 'Zero rupees'; // Handle zero case explicitly
     }
 
     return (result.charAt(0).toUpperCase() + result.slice(1) + " only");
@@ -92,4 +97,4 @@ function numberToWords(number) {
 
 // Test the function
 var number = 0.25;
-console.log(numberToWords(number));  // Expected output: "Zero rupees and twenty five paise"
+console.log(numberToWords(number));  // Expected output: "Twenty five paise only"
