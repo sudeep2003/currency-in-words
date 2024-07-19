@@ -31,6 +31,8 @@ function numberToWords(number) {
     }
 
     function convertWholeNumber(number) {
+        if (number === 0) return "Zero"; // Handle zero case explicitly
+
         var words = '';
         var crore = Math.floor(number / 10000000);
         number %= 10000000;
@@ -58,9 +60,7 @@ function numberToWords(number) {
 
     function convertDecimal(decimalPart) {
         var words = '';
-        // Convert decimalPart directly
-        console.log(decimalPart);
-        var paise = decimalPart; // No rounding needed if already accurate
+        var paise = decimalPart; // Decimal part is in paise (two decimal places)
 
         if (paise > 0) {
             words += getHundredsChunk(paise) + ' paise';
@@ -71,10 +71,9 @@ function numberToWords(number) {
 
     // Ensure the number is rounded to handle floating point precision issues
     number = Math.round(number * 100) / 100;
-    console.log(number);
+
     // Split the number into whole and decimal parts
     var [wholeNumber, decimalPart] = number.toString().split('.').map(Number);
-    console.log(wholeNumber, decimalPart);
     var wholeWords = convertWholeNumber(wholeNumber);
     var decimalWords = decimalPart !== undefined ? convertDecimal(decimalPart) : '';
 
@@ -93,4 +92,4 @@ function numberToWords(number) {
 
 // Test the function
 var number = 0.25;
-console.log(numberToWords(number));  // Expected output: "One crore sixty five lakh thirty four thousand eight hundred ninety one rupees and twenty five paise"
+console.log(numberToWords(number));  // Expected output: "Zero rupees and twenty five paise"
